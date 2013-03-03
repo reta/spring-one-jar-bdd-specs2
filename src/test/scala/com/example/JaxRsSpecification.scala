@@ -20,7 +20,7 @@ import javax.ws.rs.core.MediaType
 abstract class JaxRsSpecification extends Specification {
     val client: Given[ Client ] = ( baseUrl: String ) => 
         ClientBuilder.newClient( new ClientConfig() .property( "baseUrl", baseUrl ) )    
-       
+        
     val expectResponseContent: Then[ Response ] = ( response: Response ) => ( content: String ) =>
         response.readEntity( classOf[ String ] ) should contain( content )
     
