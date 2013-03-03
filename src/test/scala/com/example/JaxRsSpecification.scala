@@ -3,7 +3,6 @@ package com.example
 import spray.json._
 import DefaultJsonProtocol._
 import org.glassfish.jersey.client.ClientConfig
-import org.glassfish.jersey.client.filter.HttpBasicAuthFilter
 import org.specs2.Specification
 import org.specs2.specification.Given
 import org.specs2.specification.Given.function1ToGiven
@@ -19,19 +18,9 @@ import org.specs2.specification.When
 import javax.ws.rs.core.MediaType
 
 abstract class JaxRsSpecification extends Specification {
-    val client: Given[ Client ] = ( baseUrl: String ) => {
-        val config = new ClientConfig()
-        config.property( "baseUrl", baseUrl )
-        ClientBuilder.newClient( config )
-    }
+    val client: Given[ Client ] = ( baseUrl: String ) => 
+        ClientBuilder.newClient( new ClientConfig() .property( "baseUrl", baseUrl ) )    
        
-    val clientWithAuth: Given[ Client ] = ( baseUrl: String, user: String, password: String ) => {
-        val config = new ClientConfig()
-        config.register( new HttpBasicAuthFilter( user, password ), classOf[ ClientRequestFilter ] )
-        config.property( "baseUrl", baseUrl )
-        ClientBuilder.newClient( config )
-    }
-    
     val expectResponseContent: Then[ Response ] = ( response: Response ) => ( content: String ) =>
         response.readEntity( classOf[ String ] ) should contain( content )
     
