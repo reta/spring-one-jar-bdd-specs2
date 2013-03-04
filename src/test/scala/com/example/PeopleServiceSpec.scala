@@ -5,7 +5,7 @@ import org.specs2.Specification
 import org.specs2.runner.JUnitRunner
 
 @RunWith( classOf[ JUnitRunner ] )
-class PeopleServiceSpecification extends JaxRsSpecification { def is =
+class PeopleServiceSpec extends JaxRsSpecification { def is =
     "Create new person with email <a@b.com>"                                                      ^ br^
     	"Given REST client for application deployed at ${http://localhost:8080}"                  ^ client^
         "When I do POST to ${rest/api/people}"                                                    ^ post(
